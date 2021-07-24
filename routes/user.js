@@ -54,7 +54,7 @@ router.post(
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
       }
-      const { name, email, password } = req.body;
+      const { name, email, password, number } = req.body;
       let user = await User.findOne({ email });
 
       //check if user already exits in the database.
@@ -69,6 +69,7 @@ router.post(
         name,
         email,
         password,
+        number,
       });
 
       //hash the password
@@ -92,11 +93,11 @@ router.post(
 
 router.put("/:id", async (req, res) => {
   try {
-    const { name, email } = req.body;
+    const { name, email, number } = req.body;
     let user = await User.findOneAndUpdate(
       { _id: req.params.id },
       {
-        $set: { name, email },
+        $set: { name, email, number },
       },
       { new: true }
     );
